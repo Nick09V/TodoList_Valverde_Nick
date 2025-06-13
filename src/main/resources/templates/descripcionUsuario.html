@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/estilos.css}" />
 </head>
 <body>
+    <div th:replace="fragments :: navbar"></div>
     <h1>Descripción de Usuario</h1>
     <table>
         <tr><th>ID</th><td th:text="${usuario.id}"></td></tr>
