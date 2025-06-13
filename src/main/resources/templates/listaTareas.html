@@ -4,10 +4,7 @@
 <head th:replace="fragments :: head (titulo='Login')"></head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-    <a class="navbar-brand" href="/">Inicio</a>
-    <a class="nav-link" th:href="@{/registrados}">Usuarios registrados</a>
-</nav>
+<div th:replace="fragments :: navbar"></div>
 <div class="container-fluid">
 
     <div class="row mt-3">
