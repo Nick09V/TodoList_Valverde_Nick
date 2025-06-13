@@ -75,6 +75,10 @@ public class UsuarioService {
         }
     }
 
+    public UsuarioData getUsuarioById(Long id) {
+        return findById(id);
+    }
+
     @Transactional(readOnly = true)
     public List<UsuarioData> getUsuarios() {
         List<UsuarioData> usuariosData = new ArrayList<>();

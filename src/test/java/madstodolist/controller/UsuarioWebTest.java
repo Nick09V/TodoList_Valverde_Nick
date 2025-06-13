@@ -11,8 +11,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.text.SimpleDateFormat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -92,5 +95,26 @@ public class UsuarioWebTest {
                         .param("eMail","ana.garcia@gmail.com")
                         .param("password","000"))
                 .andExpect(content().string(containsString("Contraseña incorrecta")));
+    }
+
+    @Test
+    public void descripcionUsuarioVistaMuestraDatos() throws Exception {
+        // GIVEN
+        UsuarioData usuario = new UsuarioData();
+        usuario.setId(42L);
+        usuario.setNombre("Juan Pérez");
+        usuario.setEmail("juan.perez@email.com");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        usuario.setFechaNacimiento(sdf.parse("1990-01-01"));
+        when(usuarioService.getUsuarioById(42L)).thenReturn(usuario);
+
+        // WHEN, THEN
+        this.mockMvc.perform(get("/registrados/42"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Juan Pérez")))
+                .andExpect(content().string(containsString("juan.perez@email.com")))
+                .andExpect(content().string(containsString("1990-01-01")))
+                .andExpect(content().string(containsString("42")))
+                .andExpect(content().string(org.hamcrest.Matchers.not(containsString("password"))));
     }
 }
